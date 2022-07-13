@@ -5,4 +5,10 @@
     <string name="node_name">Node_Name</string>
     <string name="location_holder">Location:</string>
     <string name="comment_holder">Comment:</string>
+    <string name="device_detail">Device Detail</string>
+    <string name="delete">Delete</string>
+    <string name="edit">Edit</string>
+    <string name="device_1">Device 1</string>
+    <string name="location">Location:</string>
+    <string name="comments">Comments:</string>
 </resources>
