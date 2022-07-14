@@ -10,9 +10,19 @@
         app:showAsAction="always"
         />
     <item
+        android:id="@+id/setDevice"
+        android:title="@string/settings"
+        android:icon="@drawable/outline_settings_24"
+        app:showAsAction="ifRoom"
+        />
+    <item
         android:id="@+id/delete_device"
         android:title="@string/delete"
-        android:icon="@drawable/baseline_bluetooth_24"
         />
+    <item
+        android:id="@+id/exportData"
+        android:title="@string/export_data"
+        />
+
 
 </menu>
