@@ -21,4 +21,8 @@
     <string name="sensor_1">Sensor #1</string>
     <string name="settings">Settings</string>
     <string name="export_data">Export Data</string>
+    <string name="sensor_detail">Sensor Detail</string>
+    <string name="share_value">Share Value</string>
+    <string name="audio_amplitude">Audio Amplitude</string>
+    <string name="sound_eg">Sound Pressure Level: -16 dB</string>
 </resources>
