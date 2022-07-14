@@ -11,4 +11,12 @@
     <string name="device_1">Device 1</string>
     <string name="location">Location:</string>
     <string name="comments">Comments:</string>
+    <string name="device_name">Device #1</string>
+    <string name="gps_location_0_0">GPS Location: (0,0)</string>
+    <string name="test_comment">Comment: this is a test comment this is a test comment this is a test comment this is a test comment this is a test comment this is a test comment this is a test comment this is a test comment this is a test comment</string>
+    <string name="battery_voltage">Battery Voltage</string>
+    <string name="temperature_20_c">Temperature: 20°C</string>
+    <string name="sensors">Sensors</string>
+    <string name="current_value">Current value:</string>
+    <string name="sensor_1">Sensor #1</string>
 </resources>
