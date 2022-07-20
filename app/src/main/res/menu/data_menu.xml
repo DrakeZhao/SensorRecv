@@ -14,12 +14,6 @@
         android:icon="@drawable/ios_share"
         app:showAsAction="ifRoom"
         />
-    <item
-        android:id="@+id/delete_device"
-        android:title="@string/delete"
-        android:icon="@drawable/delete"
-        app:showAsAction="ifRoom"
-        />
 
 
 </menu>

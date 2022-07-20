@@ -1,19 +1,22 @@
 package com.zz19u21.sensorrecv
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import com.zz19u21.sensorrecv.databinding.ActivityDeviceBinding
-import com.zz19u21.sensorrecv.databinding.ActivityMainBinding
 
-class DeviceActivity : AppCompatActivity() {
+class DeviceActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var binding: ActivityDeviceBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDeviceBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
-
+        binding.sensor1.setOnClickListener(this)
+        binding.sensor2.setOnClickListener(this)
+        binding.sensor3.setOnClickListener(this)
         binding.topAppBar.setNavigationOnClickListener{
             finish()
         }
@@ -37,7 +40,39 @@ class DeviceActivity : AppCompatActivity() {
                 }
                 else -> false
             }
-
         }
+        binding.dropdownComment.setTitleText("Comment")
+        binding.dropdownComment.setContentText(" This is test commentThis is test comment \nThis is test commentThis is test commentThis is test commentThis is test commentThis is test commentThis is test comment\nThis is test commentThis is test comment")
+        val ed_text = binding.dropdownComment.getContentTextView()
+        if(ed_text.length() == 0 || ed_text.equals(""))
+        {
+            binding.dropdownComment.setVisibility(View.GONE);
+        } else {
+            binding.dropdownComment.setVisibility(View.VISIBLE);
+        }
+        binding.dropdownComment.getContentTextView().post( Runnable {
+            kotlin.run {
+                val linecount = binding.dropdownComment.getContentTextView().lineCount
+                binding.dropdownComment.setTitleText("Comment" + " (" + linecount + " lines)")
+            }
+        })
+
+
     }
+
+    override fun onClick(v: View?) {
+        when(v!!.id){
+            R.id.sensor1 -> {
+                val intent = Intent(this, DataActivity::class.java)
+                startActivity(intent)
+            }
+            R.id.sensor2 -> {
+                val intent = Intent(this, DataActivity::class.java)
+                startActivity(intent)
+            }
+            R.id.sensor3 -> {
+                val intent = Intent(this, DataActivity::class.java)
+                startActivity(intent)
+            }
+        }    }
 }

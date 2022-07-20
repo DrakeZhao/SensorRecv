@@ -4,9 +4,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import com.zz19u21.sensorrecv.databinding.ActivityDataBinding
-import com.zz19u21.sensorrecv.databinding.ActivityDeviceBinding
 
-class DataActivity : AppCompatActivity() {
+class DataActivity : AppCompatActivity(){
     private lateinit var binding: ActivityDataBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,4 +34,6 @@ class DataActivity : AppCompatActivity() {
 
         }
     }
+
+
 }
