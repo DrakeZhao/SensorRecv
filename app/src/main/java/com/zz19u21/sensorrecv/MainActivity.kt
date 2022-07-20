@@ -8,6 +8,7 @@ import android.os.Looper
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.zz19u21.sensorrecv.databinding.ActivityMainBinding
 import fontsliderbar.FontSliderBar.OnSliderBarChangeListener
 import kotlin.properties.Delegates
@@ -69,6 +70,12 @@ class MainActivity : BaseActivity() , View.OnClickListener{
         textsize10 = binding.text10.getTextSize() / textSizef
         textsize11 = binding.text11.getTextSize() / textSizef
         textsize12 = binding.text12.getTextSize() / textSizef
+
+        binding.topAppBar.setNavigationOnClickListener{
+            MaterialAlertDialogBuilder(this)
+                // Add customization options here
+                .show()
+        }
         binding.fontSliderBar.setTickCount(6)
             .setTickHeight(DisplayUtils.convertDip2Px(this, 15).toFloat()).setBarColor(Color.GRAY)
             .setTextColor(Color.BLACK)
