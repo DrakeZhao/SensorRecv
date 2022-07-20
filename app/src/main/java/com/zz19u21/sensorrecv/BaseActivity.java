@@ -6,9 +6,12 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+
+import java.util.Objects;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -64,7 +67,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         Resources res =super.getResources();
         if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.N) {
             Configuration config = res.getConfiguration();
-            config.fontScale= MyApplication.getMyInstance().getFontScale();//1 设置正常字体大小的倍数
+            config.fontScale= Objects.requireNonNull(MyApplication.Companion.getMyInstance()).getFontScale();//1 设置正常字体大小的倍数
             res.updateConfiguration(config,res.getDisplayMetrics());
         }
         return res;
@@ -75,7 +78,8 @@ public abstract class BaseActivity extends AppCompatActivity {
         if(Build.VERSION.SDK_INT>Build.VERSION_CODES.N){
             final Resources res = newBase.getResources();
             final Configuration config = res.getConfiguration();
-            config.fontScale=MyApplication.getMyInstance().getFontScale();//1 设置正常字体大小的倍数
+//            config.fontScale= MyApplication.getMyInstance().getFontScale();//1 设置正常字体大小的倍数
+            config.fontScale= MyApplication.Companion.getMyInstance().getFontScale();//1 设置正常字体大小的倍数
             final Context newContext = newBase.createConfigurationContext(config);
             super.attachBaseContext(newContext);
         }else{

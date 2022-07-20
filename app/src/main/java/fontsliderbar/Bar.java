@@ -99,8 +99,8 @@ public class Bar {
                text="A";
                mTextPaint.setTextSize(mtextSize*0.9f);
            }
-            if(i==1){
-                text="标准";
+            if(i==2){
+                text="default";
                 mTextPaint.setTextSize(mtextSize);
             }
             if(i==mSegments){
