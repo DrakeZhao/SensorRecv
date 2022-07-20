@@ -103,6 +103,12 @@ class MainActivity : BaseActivity() , View.OnClickListener{
         binding.text10.setTextSize(DisplayUtils.px2sp(this, textsize10 * textSize).toFloat())
         binding.text11.setTextSize(DisplayUtils.px2sp(this, textsize11 * textSize).toFloat())
         binding.text12.setTextSize(DisplayUtils.px2sp(this, textsize12 * textSize).toFloat())
+        if (currentIndex != binding.fontSliderBar.getCurrentIndex()) {
+            if (isClickable) {
+                isClickable = false
+                refresh()
+            }
+        }
     }
 
     private fun refresh() {
