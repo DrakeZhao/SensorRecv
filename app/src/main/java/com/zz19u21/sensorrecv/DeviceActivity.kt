@@ -7,7 +7,7 @@ import android.view.View
 import android.widget.Toast
 import com.zz19u21.sensorrecv.databinding.ActivityDeviceBinding
 
-class DeviceActivity : BaseActivity(), View.OnClickListener {
+class DeviceActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var binding: ActivityDeviceBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -76,18 +76,18 @@ class DeviceActivity : BaseActivity(), View.OnClickListener {
             }
         }
     }
-    override fun rxBusCall(message: MessageSocket?) {
-        super.rxBusCall(message)
-        when (message!!.id) {
-            98 -> {
-                //           this.recreate();
-                val intent = intent
-                overridePendingTransition(0, 0)
-                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
-                finish()
-                overridePendingTransition(0, 0)
-                startActivity(intent)
-            }
-        }
-    }
+//    override fun rxBusCall(message: MessageSocket?) {
+//        super.rxBusCall(message)
+//        when (message!!.id) {
+//            98 -> {
+//                //           this.recreate();
+//                val intent = intent
+//                overridePendingTransition(0, 0)
+//                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
+//                finish()
+//                overridePendingTransition(0, 0)
+//                startActivity(intent)
+//            }
+//        }
+//    }
 }

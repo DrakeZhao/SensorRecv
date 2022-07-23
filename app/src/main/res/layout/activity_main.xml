@@ -41,19 +41,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="100dp">
 
-                <fontsliderbar.FontSliderBar
-                    android:id="@+id/fontSliderBar"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="50dp"
-                    android:layout_marginEnd="50dp"/>
-
-            </LinearLayout>
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/card1"

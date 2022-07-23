@@ -2,16 +2,23 @@ package com.zz19u21.sensorrecv
 
 import android.content.Intent
 import android.graphics.Color
+import android.graphics.Typeface
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
+import android.util.TypedValue
+import android.view.Gravity
+import android.view.LayoutInflater
 import android.view.View
+import android.widget.LinearLayout
+import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.zz19u21.sensorrecv.databinding.ActivityMainBinding
+import fontsliderbar.FontSliderBar
 import fontsliderbar.FontSliderBar.OnSliderBarChangeListener
 import kotlin.properties.Delegates
+
 
 class MainActivity : BaseActivity() , View.OnClickListener{
 
@@ -30,6 +37,7 @@ class MainActivity : BaseActivity() , View.OnClickListener{
     private var textsize10 = 0f
     private var textsize11 = 0f
     private var textsize12 = 0f
+    lateinit var fontSliderBar: FontSliderBar
 
     private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,6 +63,7 @@ class MainActivity : BaseActivity() , View.OnClickListener{
     private fun initData() {
         currentIndex =
             MyApplication.myInstance!!.preferencesHelper!!.getValueInt("currentIndex", 1)
+
         //        currentIndex = 5;
         Log.d("TAG", "initData lala: $currentIndex")
         textSizef = 1 + currentIndex * 0.1f
@@ -70,34 +79,52 @@ class MainActivity : BaseActivity() , View.OnClickListener{
         textsize10 = binding.text10.getTextSize() / textSizef
         textsize11 = binding.text11.getTextSize() / textSizef
         textsize12 = binding.text12.getTextSize() / textSizef
+        val dialogView = LayoutInflater.from(this).inflate(R.layout.text_size_dialog, null)
+        fontSliderBar = dialogView.findViewById<FontSliderBar>(R.id.fontSliderBar)
+
 
         binding.topAppBar.setNavigationOnClickListener{
-            MaterialAlertDialogBuilder(this)
-                // Add customization options here
+
+            Log.d("taggg", "current index: " + currentIndex)
+            val materialAlertDialogBuilder = MaterialAlertDialogBuilder(this)
+            val dialogView = LayoutInflater.from(this).inflate(R.layout.text_size_dialog, null)
+            materialAlertDialogBuilder.setView(dialogView)
+            fontSliderBar = dialogView.findViewById<FontSliderBar>(R.id.fontSliderBar)
+            currentIndex =
+                MyApplication.myInstance!!.preferencesHelper!!.getValueInt("currentIndex", 1)
+            fontSliderBar.setTickCount(6)
+                .setTickHeight(DisplayUtils.convertDip2Px(this, 15).toFloat()).setBarColor(Color.GRAY)
+                .setTextColor(Color.BLACK)
+                .setTextPadding(DisplayUtils.convertDip2Px(this, 10))
+                .setTextSize(DisplayUtils.convertDip2Px(this, 14))
+                .setThumbRadius(DisplayUtils.convertDip2Px(this, 10).toFloat())
+                .setThumbColorNormal(Color.GRAY)
+                .setThumbColorPressed(Color.GRAY)
+                .setOnSliderBarChangeListener(OnSliderBarChangeListener { rangeBar, index ->
+                    var index = index
+                    if (index > 5) {
+                        return@OnSliderBarChangeListener;
+                    }
+                    index = index - 2
+                    val textSizef = 1 + index * 0.1f
+                    setTextSize(textSizef)
+                }).setThumbIndex(currentIndex).withAnimation(false).applay()
+            materialAlertDialogBuilder.setPositiveButton("Finish"){dialog, _ ->
+                dialog.dismiss()
+            }
+
+            materialAlertDialogBuilder
+                .setTitle("Change Font Size")
+                .setIcon(R.drawable.format_size)
                 .show()
         }
-        binding.fontSliderBar.setTickCount(6)
-            .setTickHeight(DisplayUtils.convertDip2Px(this, 15).toFloat()).setBarColor(Color.GRAY)
-            .setTextColor(Color.BLACK)
-            .setTextPadding(DisplayUtils.convertDip2Px(this, 10))
-            .setTextSize(DisplayUtils.convertDip2Px(this, 14))
-            .setThumbRadius(DisplayUtils.convertDip2Px(this, 10).toFloat())
-            .setThumbColorNormal(Color.GRAY)
-            .setThumbColorPressed(Color.GRAY)
-            .setOnSliderBarChangeListener(OnSliderBarChangeListener { rangeBar, index ->
-                var index = index
-                if (index > 5) {
-                    return@OnSliderBarChangeListener;
-                }
-                index = index - 2
-                val textSizef = 1 + index * 0.1f
-                setTextSize(textSizef)
-            }).setThumbIndex(currentIndex).withAnimation(false).applay()
 
     }
 
     private fun setTextSize(textSize: Float) {
         //改变当前页面的字体大小
+        currentIndex =
+            MyApplication.myInstance!!.preferencesHelper!!.getValueInt("currentIndex", 1)
         binding.text1.setTextSize(DisplayUtils.px2sp(this, textsize1 * textSize).toFloat())
         binding.text2.setTextSize(DisplayUtils.px2sp(this, textsize2 * textSize).toFloat())
         binding.text3.setTextSize(DisplayUtils.px2sp(this, textsize3 * textSize).toFloat())
@@ -110,7 +137,7 @@ class MainActivity : BaseActivity() , View.OnClickListener{
         binding.text10.setTextSize(DisplayUtils.px2sp(this, textsize10 * textSize).toFloat())
         binding.text11.setTextSize(DisplayUtils.px2sp(this, textsize11 * textSize).toFloat())
         binding.text12.setTextSize(DisplayUtils.px2sp(this, textsize12 * textSize).toFloat())
-        if (currentIndex != binding.fontSliderBar.getCurrentIndex()) {
+        if (currentIndex != fontSliderBar.getCurrentIndex()) {
             if (isClickable) {
                 isClickable = false
                 refresh()
@@ -120,20 +147,20 @@ class MainActivity : BaseActivity() , View.OnClickListener{
 
     private fun refresh() {
         //存储标尺的下标
-        Log.d("tagg", "refresh: " + binding.fontSliderBar.getCurrentIndex())
+        Log.d("tagg", "refresh: " + fontSliderBar.getCurrentIndex())
         MyApplication.myInstance!!.preferencesHelper!!.setValue(
             "currentIndex",
-            binding.fontSliderBar.getCurrentIndex()
+            fontSliderBar.getCurrentIndex()
         )
         //通知主页面重启
         RxBus.getInstance()
             .post(DataActivity::class.java.simpleName, MessageSocket(98, null, null, null))
         RxBus.getInstance()
             .post(DataActivity::class.java.simpleName, MessageSocket(98, null, null, null))
-        RxBus.getInstance()
-            .post(DeviceActivity::class.java.simpleName, MessageSocket(98, null, null, null))
-        RxBus.getInstance()
-            .post(DeviceActivity::class.java.simpleName, MessageSocket(98, null, null, null))
+//        RxBus.getInstance()
+//            .post(DeviceActivity::class.java.simpleName, MessageSocket(98, null, null, null))
+//        RxBus.getInstance()
+//            .post(DeviceActivity::class.java.simpleName, MessageSocket(98, null, null, null))
         isClickable = true
         //        showMyDialog();
         //2s后关闭  延迟执行任务 重启完主页
@@ -156,7 +183,7 @@ class MainActivity : BaseActivity() , View.OnClickListener{
             }
             R.id.card2 -> {
                 val intent = Intent(this, DeviceActivity::class.java)
-                if (currentIndex != binding.fontSliderBar.getCurrentIndex()) {
+                if (currentIndex != fontSliderBar.getCurrentIndex()) {
                     if (isClickable) {
                         isClickable = false
                         refresh()
@@ -166,7 +193,7 @@ class MainActivity : BaseActivity() , View.OnClickListener{
             }
             R.id.card3 -> {
                 val intent = Intent(this, DeviceActivity::class.java)
-                if (currentIndex != binding.fontSliderBar.getCurrentIndex()) {
+                if (currentIndex != fontSliderBar.getCurrentIndex()) {
                     if (isClickable) {
                         isClickable = false
                         refresh()
