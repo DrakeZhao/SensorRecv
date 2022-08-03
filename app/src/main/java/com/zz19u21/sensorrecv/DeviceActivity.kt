@@ -7,7 +7,7 @@ import android.view.View
 import android.widget.Toast
 import com.zz19u21.sensorrecv.databinding.ActivityDeviceBinding
 
-class DeviceActivity : AppCompatActivity(), View.OnClickListener {
+class DeviceActivity :  AppCompatActivity(), View.OnClickListener {
     private lateinit var binding: ActivityDeviceBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
