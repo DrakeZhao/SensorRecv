@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+  <!--
+      Base application theme, dependent on API level. This theme is
+      replaced by AppBaseTheme from res/values-vXX/styles.xml on newer
+      devices.
+  -->
+  <style name="AppBaseTheme" parent="android:Theme.Holo.Light.DarkActionBar">
+    <!--
+        Theme customizations available in newer API levels can go in
+        res/values-vXX/styles.xml, while customizations related to
+        backward-compatibility can go here.
+    -->
+  </style>
+
+  <style name="AppDarkBaseTheme" parent="android:Theme.Holo">
+    <!--
+        Theme customizations available in newer API levels can go in
+        res/values-vXX/styles.xml, while customizations related to
+        backward-compatibility can go here.
+    -->
+  </style>
+
+  <!-- Application theme. -->
+  <style name="AppTheme" parent="AppBaseTheme">
+    <!--
+        All customizations that are NOT specific to a particular
+        API-level can go here.
+    -->
+
+    <item name="application">@drawable/ic_action_stop</item>
+    <item name="external">@drawable/ic_action_sd_storage</item>
+    <item name="file">@drawable/ic_action_view_as_list</item>
+    <item name="folder">@drawable/ic_action_collection</item>
+    <item name="audio">@drawable/ic_action_volume_on</item>
+    <item name="image">@drawable/ic_action_picture</item>
+    <item name="parent">@drawable/ic_action_reply</item>
+    <item name="video">@drawable/ic_action_video</item>
+
+  </style>
+
+  <!-- Application theme. -->
+  <style name="AppDarkTheme" parent="AppDarkBaseTheme">
+    <!--
+        All customizations that are NOT specific to a particular
+        API-level can go here.
+    -->
+
+    <item name="application">@drawable/ic_action_stop_dark</item>
+    <item name="external">@drawable/ic_action_sd_storage_dark</item>
+    <item name="file">@drawable/ic_action_view_as_list_dark</item>
+    <item name="folder">@drawable/ic_action_collection_dark</item>
+    <item name="audio">@drawable/ic_action_volume_on_dark</item>
+    <item name="image">@drawable/ic_action_picture_dark</item>
+    <item name="parent">@drawable/ic_action_reply_dark</item>
+    <item name="video">@drawable/ic_action_video_dark</item>
+
+  </style>
+
+  <!-- Application theme. -->
+  <style name="AppBlackTheme" parent="AppDarkBaseTheme">
+    <!--
+        All customizations that are NOT specific to a particular
+        API-level can go here.
+    -->
+
+    <item name="application">@drawable/ic_action_stop_dark</item>
+    <item name="external">@drawable/ic_action_sd_storage_dark</item>
+    <item name="file">@drawable/ic_action_view_as_list_dark</item>
+    <item name="folder">@drawable/ic_action_collection_dark</item>
+    <item name="audio">@drawable/ic_action_volume_on_dark</item>
+    <item name="image">@drawable/ic_action_picture_dark</item>
+    <item name="parent">@drawable/ic_action_reply_dark</item>
+    <item name="video">@drawable/ic_action_video_dark</item>
+
+    <item name="android:editTextBackground">@drawable/edit_text_background</item>
+    <item name="background">@color/colorBlackBackground</item>
+
+  </style>
+
+  <!-- Application theme. -->
+  <style name="AppRetroTheme" parent="AppDarkBaseTheme">
+    <!--
+        All customizations that are NOT specific to a particular
+        API-level can go here.
+    -->
+
+    <item name="application">@drawable/ic_action_stop_dark</item>
+    <item name="external">@drawable/ic_action_sd_storage_dark</item>
+    <item name="file">@drawable/ic_action_view_as_list_dark</item>
+    <item name="folder">@drawable/ic_action_collection_dark</item>
+    <item name="audio">@drawable/ic_action_volume_on_dark</item>
+    <item name="image">@drawable/ic_action_picture_dark</item>
+    <item name="parent">@drawable/ic_action_reply_dark</item>
+    <item name="video">@drawable/ic_action_video_dark</item>
+
+    <item name="android:editTextBackground">@drawable/edit_text_background</item>
+    <item name="background">@color/colorRetroBackground</item>
+
+    <item name="android:textColorPrimary">@color/text_color_retro</item>
+    <item name="android:textColorSecondary">@color/text_color_retro</item>
+    <item name="android:textColorTertiary">@color/text_color_retro</item>
+
+  </style>
+
+</resources>

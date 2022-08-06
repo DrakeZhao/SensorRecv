@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="">
+
+  <string name="appName">エディター</string>
+
+  <string name="newFile">新規ファイル</string>
+  <string name="edit">編集</string>
+  <string name="view">閲覧</string>
+  <string name="open">ファイルを開く…</string>
+  <string name="save">保存</string>
+  <string name="storage">ストレージ</string>
+  <string name="openRecent">最近のファイル</string>
+  <string name="clearList">リストをクリア</string>
+  <string name="search">検索…</string>
+  <string name="findAll">すべて検索</string>
+  <string name="saveAs">名前をつけて保存…</string>
+  <string name="detect">検出</string>
+  <string name="viewMarkdown">マークダウンを閲覧…</string>
+  <string name="viewFile">ファイル閲覧</string>
+  <string name="autoSave">自動保存</string>
+  <string name="wrap">画面端で折り返す</string>
+  <string name="suggest">提案</string>
+  <string name="highlight">シンタックスハイライト</string>
+  <string name="theme">テーマ</string>
+  <string name="light">ライト</string>
+  <string name="dark">ダーク</string>
+  <string name="black">ブラック</string>
+  <string name="retro">レトロ</string>
+  <string name="size">文字サイズ</string>
+  <string name="small">小</string>
+  <string name="medium">中</string>
+  <string name="large">大</string>
+  <string name="typeface">書体</string>
+  <string name="mono">Monospace</string>
+  <string name="normal">Proportional</string>
+  <string name="about">このアプリについて</string>
+
+  <!--
+      Note for translators: You don't need to translate all these
+      translation credits below. Just the version, copyright, credit
+      for your translation and the licence. Also add your translation
+      credit here.
+  -->
+  <string name="version" formatted="false"><a href="https://github.com/billthefarmer/editor/releases/latest">%s</a>\n\nBuilt %s\n\nCopyright \u00A9 2017 <a href="https://github.com/billthefarmer">Bill Farmer</a>\n\n<a href="https://gitlab.com/dokutoku">dokutoku</a>による日本語訳\n\nLicence <a href="https://www.gnu.org/licenses/gpl.txt">GNU GPLv3</a>
+  </string>
+
+  <string name="tooLarge">%sのサイズが大きすぎます</string>
+  <string name="choose">ファイル名を選択してください</string>
+  <string name="loading">読み込み中…</string>
+
+  <string name="modified">
+    未保存の変更があります。変更を保存しますか？
+  </string>
+
+  <string name="changedReload">
+   このファイルは変更されましたが、再読み込みしますか？
+  </string>
+
+  <string name="changedOverwrite">
+    このファイルは変更されましたが、上書きしますか？
+  </string>
+
+  <string name="ok">はい</string>
+  <string name="reload">再読み込み</string>
+  <string name="overwrite">上書き</string>
+  <string name="discard">破棄</string>
+  <string name="cancel">キャンセル</string>
+
+</resources>

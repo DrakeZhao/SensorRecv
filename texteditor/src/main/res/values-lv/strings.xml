@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+  <string name="appName">Redaktors</string>
+
+  <string name="newFile">Jauns</string>
+  <string name="edit">Rediģēt</string>
+  <string name="view">Skatīt</string>
+  <string name="open">Atvērt failu…</string>
+  <string name="save">Saglabāt</string>
+  <string name="storage">Krātuve</string>
+  <string name="openRecent">Atvērt neseno</string>
+  <string name="clearList">Notīrīt sarakstu</string>
+  <string name="search">Meklēt…</string>
+  <string name="findAll">Atrodi visu…</string>
+  <string name="saveAs">Saglabāt kā…</string>
+  <string name="detect">Atklāt</string>
+  <string name="viewMarkdown">Skatīt markdown…</string>
+  <string name="viewFile">Skatīt failus</string>
+  <string name="autoSave">Automātiska saglabāšana</string>
+  <string name="wrap">Vārdu aplaušana</string>
+  <string name="suggest">Ieteikumi</string>
+  <string name="highlight">Izcelt sintaksi</string>
+  <string name="theme">Motīvs</string>
+  <string name="light">Gaišs</string>
+  <string name="dark">Tumšs</string>
+  <string name="black">Melns</string>
+  <string name="retro">Retro</string>
+  <string name="size">Teksta izmērs</string>
+  <string name="small">Mazs</string>
+  <string name="medium">Vidējs</string>
+  <string name="large">Liels</string>
+  <string name="typeface">Burtveidols</string>
+  <string name="mono">Vienplatuma</string>
+  <string name="normal">Proporcionāls</string>
+  <string name="about">Par</string>
+
+  <string name="version" formatted="false"><a
+  href="https://github.com/billthefarmer/editor/releases/latest">%s</a>\n\nBūvēts
+  %s\n\nAutortiesības \u00A9 2017 Bill Farmer\n\nNo latviešu valodas
+  tulkojis <a href="https://github.com/rhssk">Rihards Skuja
+  </a>\n\nLicence <a href="https://www.gnu.org/licenses/gpl.txt">GNU
+  GPLv3</a>
+  </string>
+
+  <string name="tooLarge">Pārāk liels %s</string>
+  <string name="choose">Izvēlies faila nosaukumu</string>
+  <string name="loading">Atver…</string>
+
+  <string name="modified">
+    Tev ir nesaglabātas izmaiņas. Vai vēlies tās saglabāt?
+  </string>
+
+  <string name="changedReload">
+    Šis fails ir izmainījies. Vai vēlies to pārlādēt?
+  </string>
+
+  <string name="changedOverwrite">
+    Šis fails ir izmainījies. Vai vēlies to pārrakstīt?
+  </string>
+
+  <string name="ok">Labi</string>
+  <string name="reload">Pārlādēt</string>
+  <string name="overwrite">Pārrakstīt</string>
+  <string name="discard">Atmest izmaiņas</string>
+  <string name="cancel">Atcelt</string>
+
+</resources>

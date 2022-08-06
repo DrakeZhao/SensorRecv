@@ -1,0 +1,49 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        google()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:7.2.1'
+    }
+}
+
+allprojects {
+    repositories {
+        mavenCentral()
+        google()
+    }
+}
+
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 28
+
+    defaultConfig {
+        applicationId "org.billthefarmer.editor"
+        minSdkVersion 14
+        targetSdkVersion 28
+        versionName "1.74"
+        versionCode 174
+
+        buildConfigField "long", "BUILT", System.currentTimeMillis() + "L"
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    lintOptions {
+        disable 'IconDensities', 'ContentDescription', 'OldTargetApi',
+            'NonConstantResourceId', 'ExpiredTargetSdkVersion',
+            'MediaCapabilities', 'FindViewByIdCast', 'WrongViewCast'
+        // abortOnError false
+    }
+}
+
+dependencies {
+    implementation 'org.commonmark:commonmark:0.18.0'
+}

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+  <string name="appName">Editor</string>
+
+  <string name="newFile">Nuovo</string>
+  <string name="edit">Modificare</string>
+  <string name="view">Vedere</string>
+  <string name="open">Apri file…</string>
+  <string name="save">Salva</string>
+  <string name="storage">Archiviazione</string>
+  <string name="openRecent">Apri recente</string>
+  <string name="clearList">Elenco chiaro</string>
+  <string name="search">Cerca…</string>
+  <string name="findAll">Cerca ovunque…</string>
+  <string name="saveAs">Salva come…</string>
+  <string name="detect">Rileva</string>
+  <string name="viewMarkdown">Visualizza markdown…</string>
+  <string name="viewFile">Vedi files</string>
+  <string name="autoSave">Salva automatico</string>
+  <string name="wrap">A capo automatico</string>
+  <string name="suggest">Suggerimenti</string>
+  <string name="highlight">Evidenzia sintassi</string>
+  <string name="theme">Tema</string>
+  <string name="light">Chiaro</string>
+  <string name="dark">Scuro</string>
+  <string name="black">Nero</string>
+  <string name="retro">Retro</string>
+  <string name="size">Dimensione testo</string>
+  <string name="small">Piccola</string>
+  <string name="medium">Medio</string>
+  <string name="large">Largo</string>
+  <string name="typeface">Carattere</string>
+  <string name="mono">Monospazio</string>
+  <string name="normal">Proporzionale</string>
+  <string name="about">Informazioni</string>
+
+  <string name="version" formatted="false"><a
+  href="https://github.com/billthefarmer/editor/releases/latest">%s</a>\n\nData
+  di compilazione %s\n\nCopyright \u00A9 2017 Bill
+  Farmer\n\nTraduzione in italiano di <a
+  href="https://github.com/airon90">Michael Moroni</a>\n\nLicenza <a
+  href="https://www.gnu.org/licenses/gpl.txt">GNU GPLv3</a>
+  </string>
+
+  <string name="tooLarge">Troppo grande %s</string>
+  <string name="choose">Scegli il nome del file</string>
+  <string name="loading">Caricamento…</string>
+
+  <string name="modified">
+    Hai delle modifiche non salvate. Vuoi salva le tue modifiche?
+  </string>
+
+  <string name="changedReload">
+    Il file è cambiato. Vuoi ricaricarlo?
+  </string>
+
+  <string name="changedOverwrite">
+    Il file è cambiato. Vuoi sovrascriverlo?
+  </string>
+
+  <string name="ok">Ok</string>
+  <string name="reload">Ricarica</string>
+  <string name="overwrite">Sovrascrivi</string>
+  <string name="discard">Non salvare</string>
+  <string name="cancel">Annulla</string>
+
+</resources>

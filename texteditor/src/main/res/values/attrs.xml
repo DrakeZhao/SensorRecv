@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+  <declare-styleable name="Editor">
+
+    <attr name="background" format="reference" />
+
+    <attr name="application" format="reference" />
+    <attr name="external" format="reference" />
+    <attr name="folder" format="reference" />
+    <attr name="parent" format="reference" />
+    <attr name="audio" format="reference" />
+    <attr name="image" format="reference" />
+    <attr name="video" format="reference" />
+    <attr name="file" format="reference" />
+
+  </declare-styleable>
+
+</resources>

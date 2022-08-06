@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+  <string name="appName">Editor</string>
+
+  <string name="newFile">Nuevo</string>
+  <string name="edit">Editar</string>
+  <string name="view">Ver</string>
+  <string name="open">Abrir archivo…</string>
+  <string name="save">Guardar</string>
+  <string name="storage">Almacenamiento</string>
+  <string name="openRecent">Abierto por última vez</string>
+  <string name="clearList">Limpiar lista</string>
+  <string name="search">Buscar…</string>
+  <string name="findAll">Encuentra todos…</string>
+  <string name="saveAs">Guardar como…</string>
+  <string name="detect">Detectar</string>
+  <string name="viewMarkdown">Ver markdown…</string>
+  <string name="viewFile">Mostrar archivo</string>
+  <string name="autoSave">Guardado automático</string>
+  <string name="wrap">Salto de línea</string>
+  <string name="suggest">Recomendaciones</string>
+  <string name="highlight">Marcar la sintaxis</string>
+  <string name="theme">Tema</string>
+  <string name="light">Claro</string>
+  <string name="dark">Oscuro</string>
+  <string name="black">Negro</string>
+  <string name="retro">Retro</string>
+  <string name="size">Tamaño del texto</string>
+  <string name="small">Pequeño</string>
+  <string name="medium">Medio</string>
+  <string name="large">Grande</string>
+  <string name="typeface">Fuente</string>
+  <string name="mono">Monospace</string>
+  <string name="normal">Proporciónal</string>
+  <string name="about">Acerca de</string>
+
+  <string name="version" formatted="false"><a
+  href="https://github.com/billthefarmer/editor/releases/latest">%s</a>\n\nBuild
+  %s\n\nCopyright \u00A9 2019 Bill Farmer\n\nTraducción al Español por
+  <a href="https://github.com/foxneo">Miguel Caceres</a>\n\nLicencia
+  <a href="https://www.gnu.org/licenses/gpl.txt">GNU GPLv3</a>
+  </string>
+
+  <string name="tooLarge">Demasiado grande %s</string>
+  <string name="choose">Ingresa el nombre del archivo</string>
+  <string name="loading">Cargando…</string>
+
+  <string name="modified">
+    Cambios en el archivo no han sido guardados. Deseas gurdarlos?
+  </string>
+
+  <string name="changedReload">
+    El archivo ha sido modificado. Deseas actualizarlo?
+  </string>
+
+  <string name="changedOverwrite">
+    El archivo ha sido modificado. Deseas sobreescribirlo?
+  </string>
+
+  <string name="ok">OK</string>
+  <string name="reload">Actualizar</string>
+  <string name="overwrite">Sobreescribir</string>
+  <string name="discard">Descartar</string>
+  <string name="cancel">Cancelar</string>
+
+</resources>

@@ -1,0 +1,35 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        google()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:7.2.1'
+    }
+}
+
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 28
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    lintOptions {
+        disable 'IconDensities', 'ContentDescription', 'OldTargetApi',
+            'NonConstantResourceId', 'ExpiredTargetSdkVersion',
+            'MediaCapabilities', 'FindViewByIdCast', 'WrongViewCast'
+        // abortOnError false
+    }
+    defaultConfig {
+        minSdk 21
+    }
+}
+
+dependencies {
+    implementation 'org.commonmark:commonmark:0.18.0'
+}

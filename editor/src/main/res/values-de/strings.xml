@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+  <string name="appName">Editor</string>
+
+  <string name="newFile">Neu</string>
+  <string name="edit">Bearbeiten</string>
+  <string name="view">Betrachten</string>
+  <string name="open">Datei öffnen…</string>
+  <string name="save">Speichern</string>
+  <string name="storage">Speicher</string>
+  <string name="openRecent">Zuletzt geöffnet</string>
+  <string name="clearList">Liste leeren</string>
+  <string name="search">Suchen…</string>
+  <string name="findAll">Alle finden…</string>
+  <string name="saveAs">Speichern unter…</string>
+  <string name="detect">Erkennen</string>
+  <string name="viewMarkdown">Markdown betrachten…</string>
+  <string name="viewFile">Dateien anzeigen</string>
+  <string name="autoSave">Automatisch speichern</string>
+  <string name="wrap">Zeilenumbruch</string>
+  <string name="suggest">Vorschläge</string>
+  <string name="highlight">Syntax hervorheben</string>
+  <string name="theme">Thema</string>
+  <string name="light">Hell</string>
+  <string name="dark">Dunkel</string>
+  <string name="black">Schwarz</string>
+  <string name="retro">Retro</string>
+  <string name="size">Schriftgröße</string>
+  <string name="small">Klein</string>
+  <string name="medium">Mittel</string>
+  <string name="large">Groß</string>
+  <string name="typeface">Schriftart</string>
+  <string name="mono">Nichtproportional</string>
+  <string name="normal">Proportional</string>
+  <string name="about">Über</string>
+
+  <string name="version" formatted="false"><a
+  href="https://github.com/billthefarmer/editor/releases/latest">%s</a>\n\nBuild
+  %s\n\nCopyright \u00A9 2017 Bill Farmer\n\nDeutsche Übersetzung von
+  <a href="https://github.com/Markus00000">Markus Weimar</a> und
+  <a href="https://github.com/AlexanderRitter02">Alexander Ritter</a>\n\nLizenz
+  <a href="https://www.gnu.org/licenses/gpl.txt">GNU GPLv3</a>
+  </string>
+
+  <string name="tooLarge">Zu groß %s</string>
+  <string name="choose">Geben Sie einen Dateinamen ein.</string>
+  <string name="loading">Laden…</string>
+
+  <string name="modified">
+    Ihre Änderungen wurden noch nicht gespeichert. Möchten Sie sie speichern?
+  </string>
+
+  <string name="changedReload">
+    Die Datei wurde geändert. Möchten Sie sie newFile laden?
+  </string>
+
+  <string name="changedOverwrite">
+    Die Datei wurde geändert. Möchten Sie sie überschreiben?
+  </string>
+
+  <string name="ok">OK</string>
+  <string name="reload">Neu laden</string>
+  <string name="overwrite">Überschreiben</string>
+  <string name="discard">Verwerfen</string>
+  <string name="cancel">Abbrechen</string>
+
+</resources>
