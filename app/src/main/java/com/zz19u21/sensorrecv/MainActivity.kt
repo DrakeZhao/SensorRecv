@@ -1,18 +1,14 @@
 package com.zz19u21.sensorrecv
 
 import android.content.Intent
+import android.content.pm.PackageInfo
+import android.content.pm.PackageManager
 import android.graphics.Color
-import android.graphics.Typeface
 import android.os.Bundle
 import android.util.Log
-import android.util.TypedValue
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.LinearLayout
-import android.widget.TextView
 import android.widget.Toast
-import androidx.core.content.ContextCompat
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.zz19u21.sensorrecv.databinding.ActivityMainBinding
 import fontsliderbar.FontSliderBar
@@ -48,6 +44,19 @@ class MainActivity : BaseActivity() , View.OnClickListener{
         binding.card1.setOnClickListener(this)
         binding.card2.setOnClickListener(this)
         binding.card3.setOnClickListener(this)
+
+        var a:Int = 0
+
+        try {
+            val packageName: String = applicationContext.packageName
+            val packageInfo: PackageInfo =
+                packageManager.getPackageInfo(packageName, PackageManager.GET_META_DATA)
+            a = packageInfo.applicationInfo.theme
+            Log.d("Tag", "onCreate: main layout" + resources.getResourceName(a))
+
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
         binding.topAppBar.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId){
                 R.id.add_bluetooth -> {
