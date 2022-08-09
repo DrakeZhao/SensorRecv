@@ -32,6 +32,8 @@ class DeviceActivity :  AppCompatActivity(), View.OnClickListener {
                 }
                 R.id.setDevice ->{
                     Toast.makeText(this, "Settings", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this, EditorActivity::class.java)
+                    startActivity(intent)
                     true
                 }
                 R.id.exportData -> {
