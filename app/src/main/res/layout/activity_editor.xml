@@ -7,12 +7,10 @@
     tools:context=".EditorActivity">
 
 
-
-
     <EditText
         android:id="@+id/editTextTextMultiLine"
-        android:layout_width="393dp"
-        android:layout_height="252dp"
+        android:layout_width="382dp"
+        android:layout_height="643dp"
         android:layout_marginTop="68dp"
         android:ems="10"
         android:gravity="start|top"

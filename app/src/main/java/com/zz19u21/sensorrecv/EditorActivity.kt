@@ -2,18 +2,25 @@ package com.zz19u21.sensorrecv
 
 import android.Manifest
 import android.content.pm.PackageManager
+import android.graphics.Color
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Environment
+import android.text.Editable
+import android.text.Spanned
+import android.text.TextWatcher
+import android.text.style.CharacterStyle
+import android.text.style.ForegroundColorSpan
 import android.util.Log
+import android.widget.EditText
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.zz19u21.sensorrecv.databinding.ActivityEditorBinding
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
-import java.lang.Exception
-import kotlin.math.log
+import java.util.regex.Matcher
+import java.util.regex.Pattern
+
 
 class EditorActivity : AppCompatActivity() {
     private lateinit var binding: ActivityEditorBinding
@@ -25,6 +32,75 @@ class EditorActivity : AppCompatActivity() {
         binding = ActivityEditorBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+
+        binding.editTextTextMultiLine.addTextChangedListener(object : TextWatcher {
+            var keywords = ColorScheme(
+                Pattern.compile(
+                    "\\b(package|transient|strictfp|void|char|short|int|long|double|float|const|static|volatile|byte|boolean|class|interface|native|private|protected|public|final|abstract|synchronized|enum|instanceof|assert|if|else|switch|case|default|break|goto|return|for|while|do|continue|new|throw|throws|try|catch|finally|this|super|extends|implements|import|true|false|null)\\b"
+                ),
+                Color.CYAN
+            )
+            var numbers = ColorScheme(
+                Pattern.compile("(\\b(\\d*[.]?\\d+)\\b)"),
+                Color.BLUE
+            )
+
+            var comments = ColorScheme(
+                Pattern.compile(
+                    "(?m)^#.*\\n?"
+                ),
+                Color.GRAY
+            )
+
+            var dquotes = ColorScheme(
+                Pattern.compile(
+                    "(\")((?:[^\"]|\"\")*)\""
+                ),
+                Color.GREEN
+            )
+
+            var squotes = ColorScheme(
+                Pattern.compile(
+                    "(')((?:[^']|'')*)'"
+                ),
+                Color.GREEN
+            )
+
+            val schemes = arrayOf(keywords, numbers, comments, dquotes, squotes)
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
+            override fun afterTextChanged(s: Editable) {
+                removeSpans(s, ForegroundColorSpan::class.java)
+                for (scheme in schemes) {
+                    val m: Matcher = scheme.pattern.matcher(s)
+                    while (m.find()) {
+                        s.setSpan(
+                            ForegroundColorSpan(scheme.color),
+                            m.start(),
+                            m.end(),
+                            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                        )
+                    }
+                }
+            }
+
+            fun removeSpans(e: Editable, type: Class<out CharacterStyle?>) {
+                val spans: Array<CharacterStyle> = e.getSpans(0, e.length, type) as Array<CharacterStyle>
+                for (span in spans) {
+                    e.removeSpan(span)
+                }
+            }
+
+            inner class ColorScheme(pattern: Pattern, color: Int) {
+                val pattern: Pattern
+                val color: Int
+
+                init {
+                    this.pattern = pattern
+                    this.color = color
+                }
+            }
+        })
 
         binding.btnWrite.setOnClickListener{
             val yamlContent:String = binding.editTextTextMultiLine.text.toString()

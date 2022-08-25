@@ -1,18 +1,27 @@
 package com.zz19u21.sensorrecv
 
+import android.Manifest
+import android.bluetooth.BluetoothAdapter
+import android.bluetooth.BluetoothAdapter.ACTION_DISCOVERY_STARTED
+import android.bluetooth.BluetoothDevice
+import android.bluetooth.BluetoothManager
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
+import android.content.pm.PackageManager
 import android.graphics.Color
-import android.graphics.Typeface
+import android.location.LocationManager
+import android.media.audiofx.BassBoost
+import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import android.util.Log
-import android.util.TypedValue
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.LinearLayout
-import android.widget.TextView
-import android.widget.Toast
-import androidx.core.content.ContextCompat
+import android.widget.*
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.app.ActivityCompat
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.zz19u21.sensorrecv.databinding.ActivityMainBinding
 import fontsliderbar.FontSliderBar
@@ -21,6 +30,14 @@ import kotlin.properties.Delegates
 
 
 class MainActivity : BaseActivity() , View.OnClickListener{
+
+    private var m_bluetoothAdapter: BluetoothAdapter? = null
+    private lateinit var m_pairedDevices: Set<BluetoothDevice>
+//    val REQUEST_ENABLE_BLUETOOTH = 1
+
+    companion object{
+        val EXTRA_ADDRESS: String = "Device_address"
+    }
 
     private var textSizef by Delegates.notNull<Float>()
     private var currentIndex by Delegates.notNull<Int>()
@@ -47,19 +64,57 @@ class MainActivity : BaseActivity() , View.OnClickListener{
         setContentView(view)
         binding.card1.setOnClickListener(this)
         binding.card2.setOnClickListener(this)
-        binding.card3.setOnClickListener(this)
+//        binding.card3.setOnClickListener(this)
+        val bluetoothManager = this.getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
+        m_bluetoothAdapter = bluetoothManager.getAdapter()
+        if (m_bluetoothAdapter == null){
+            Toast.makeText(this, "no bluetooth supported", Toast.LENGTH_SHORT).show()
+            return
+        }
+        if(!m_bluetoothAdapter!!.isEnabled){
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                requestMultiplePermissions.launch(arrayOf(
+                    Manifest.permission.BLUETOOTH_SCAN,
+                    Manifest.permission.BLUETOOTH_CONNECT,
+                Settings.ACTION_LOCATION_SOURCE_SETTINGS))
+            }
+            else{
+                val enableBluetoothIntent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
+                requestBluetooth.launch(enableBluetoothIntent)
+            }
+        }
         binding.topAppBar.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId){
                 R.id.add_bluetooth -> {
                     Toast.makeText(this, "Scan bluetooth", Toast.LENGTH_SHORT).show()
+                    pairedDeviceList()
                     true
                 }
                 else -> false
             }
         }
         initData()
-    }
 
+    }
+    private var requestBluetooth = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == RESULT_OK) {
+            //granted
+            if(m_bluetoothAdapter!!.isEnabled){
+                Toast.makeText(this, "Bluetooth has been enabled", Toast.LENGTH_SHORT).show()
+            }else{
+                Toast.makeText(this, "Bluetooth has been disabled", Toast.LENGTH_SHORT).show()
+            }
+        }else{
+            //deny
+            Toast.makeText(this, "Bluetooth has been cancelled", Toast.LENGTH_SHORT).show()
+        }
+    }
+    private val requestMultiplePermissions =
+        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
+            permissions.entries.forEach {
+                Log.d("test006", "${it.key} = ${it.value}")
+            }
+        }
     private fun initData() {
         currentIndex =
             MyApplication.myInstance!!.preferencesHelper!!.getValueInt("currentIndex", 1)
@@ -73,12 +128,12 @@ class MainActivity : BaseActivity() , View.OnClickListener{
         textsize4 = binding.text4.getTextSize() / textSizef
         textsize5 = binding.text5.getTextSize() / textSizef
         textsize6 = binding.text6.getTextSize() / textSizef
-        textsize7 = binding.text7.getTextSize() / textSizef
-        textsize8 = binding.text8.getTextSize() / textSizef
-        textsize9 = binding.text9.getTextSize() / textSizef
-        textsize10 = binding.text10.getTextSize() / textSizef
-        textsize11 = binding.text11.getTextSize() / textSizef
-        textsize12 = binding.text12.getTextSize() / textSizef
+//        textsize7 = binding.text7.getTextSize() / textSizef
+//        textsize8 = binding.text8.getTextSize() / textSizef
+//        textsize9 = binding.text9.getTextSize() / textSizef
+//        textsize10 = binding.text10.getTextSize() / textSizef
+//        textsize11 = binding.text11.getTextSize() / textSizef
+//        textsize12 = binding.text12.getTextSize() / textSizef
         val dialogView = LayoutInflater.from(this).inflate(R.layout.text_size_dialog, null)
         fontSliderBar = dialogView.findViewById<FontSliderBar>(R.id.fontSliderBar)
 
@@ -121,6 +176,161 @@ class MainActivity : BaseActivity() , View.OnClickListener{
 
     }
 
+
+    private fun pairedDeviceList(){
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.BLUETOOTH_CONNECT
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                requestMultiplePermissions.launch(arrayOf(
+                    Manifest.permission.BLUETOOTH_SCAN,
+                    Manifest.permission.BLUETOOTH_CONNECT))
+            }
+            else{
+                val enableBtIntent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
+                requestBluetooth.launch(enableBtIntent)
+            }
+            Log.d("debughere", "pairedDeviceList: 123 return")
+        }
+        val bluetoothManager = this.getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
+        m_bluetoothAdapter = bluetoothManager.getAdapter()
+        if (m_bluetoothAdapter == null){
+            Toast.makeText(this, "no bluetooth supported", Toast.LENGTH_SHORT).show()
+            return
+        }
+        if(!m_bluetoothAdapter!!.isEnabled){
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                requestMultiplePermissions.launch(arrayOf(
+                    Manifest.permission.BLUETOOTH_SCAN,
+                    Manifest.permission.BLUETOOTH_CONNECT))
+            }
+            else{
+                val enableBluetoothIntent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
+                requestBluetooth.launch(enableBluetoothIntent)
+            }
+        }
+
+        val locationManager = getSystemService(LOCATION_SERVICE) as LocationManager
+        val isGpsEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
+        if (!isGpsEnabled) {
+            Log.d("debug", "pairedDeviceList: gps not enabled")
+        }
+        m_bluetoothAdapter!!.startDiscovery()
+        Log.d("debug", "pairedDeviceList: adapter is" + m_bluetoothAdapter)
+        Log.d("debug", "pairedDeviceList: startdiscover")
+        val list: ArrayList<BluetoothDevice> = ArrayList()
+        val listName: ArrayList<String> = ArrayList()
+        val receiver = object : BroadcastReceiver() {
+            override fun onReceive(context: Context, intent: Intent) {
+                val action: String? = intent.action
+                Log.d("debug", "onReceive: actionfound" + action)
+                when(action) {
+                    BluetoothDevice.ACTION_FOUND -> {
+                        Log.d("debug", "onReceive: devicefound")
+                        // Discovery has found a device. Get the BluetoothDevice
+                        // object and its info from the Intent.
+                        val device: BluetoothDevice? =
+                            intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE)
+                        if (ActivityCompat.checkSelfPermission(
+                                context,
+                                Manifest.permission.BLUETOOTH_CONNECT
+                            ) != PackageManager.PERMISSION_GRANTED
+                        ) {
+
+                            Log.d("debughere", "pairedDeviceList: 123 haha")
+                        }
+                        val deviceName = device?.name
+                        val deviceHardwareAddress = device?.address // MAC address
+
+                        Log.d("debughere", "pairedDeviceList: 123" + list)
+
+                        if(!list.contains(device)){
+                            if (device != null) {
+                                list.add(device)
+                            }
+                            if (deviceName != null) {
+                                listName.add(deviceName)
+                            }
+                        }
+                        val adapter = ArrayAdapter(context, android.R.layout.simple_list_item_1, listName)
+                        Log.d("debug", "pairedDeviceList: listnames" + listName)
+                        binding.selectDeviceList.adapter = adapter
+                        binding.selectDeviceList.onItemClickListener = AdapterView.OnItemClickListener{_, _, position, _ ->
+                            val bdevice: BluetoothDevice = list[position]
+                            val address: String = bdevice.address
+
+                            val tintent = Intent(context, DeviceActivity::class.java)
+                            tintent.putExtra(EXTRA_ADDRESS, address)
+                            startActivity(tintent)
+                        }
+                    }
+                }
+            }
+        }
+
+        Log.d("debug", "pairedDeviceList: here ended")
+        val filter = IntentFilter()
+        filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_STARTED);
+        filter.addAction(BluetoothDevice.ACTION_FOUND);
+        filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
+        registerReceiver(receiver, filter)
+        m_bluetoothAdapter!!.startDiscovery()
+        Log.d("debug", "pairedDeviceList: discovering?" + m_bluetoothAdapter!!.isDiscovering)
+        if (m_bluetoothAdapter!!.isDiscovering()) {
+            // bluetooth has started discovery
+            Log.d("debug", "pairedDeviceList: isdiscovering")
+
+        }
+
+//        m_pairedDevices = m_bluetoothAdapter!!.bondedDevices
+//        val list: ArrayList<BluetoothDevice> = ArrayList()
+//        val listName: ArrayList<String> = ArrayList()
+//        Log.d("debughere", "pairedDeviceList: 123" + m_pairedDevices)
+//
+//        if(!m_pairedDevices.isEmpty()){
+//            for (device: BluetoothDevice in m_pairedDevices){
+//                list.add(device)
+//                listName.add(device.name)
+//                Log.i("device", "pairedDeviceList: " + device)
+//            }
+//        }else{
+//            Toast.makeText(this, "no paired devices found yet", Toast.LENGTH_SHORT).show()
+//        }
+//
+//        val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, listName)
+//        binding.selectDeviceList.adapter = adapter
+//        binding.selectDeviceList.onItemClickListener = AdapterView.OnItemClickListener{_, _, position, _ ->
+//            val device: BluetoothDevice = list[position]
+//            val address: String = device.address
+//
+//            val intent = Intent(this, DeviceActivity::class.java)
+//            intent.putExtra(EXTRA_ADDRESS, address)
+//            startActivity(intent)
+//        }
+    }
+
+//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+//        super.onActivityResult(requestCode, resultCode, data)
+//        if(requestCode == REQUEST_ENABLE_BLUETOOTH){
+//            if(resultCode == Activity.RESULT_OK){
+//                if(m_bluetoothAdapter!!.isEnabled){
+//                    Toast.makeText(this, "Bluetooth has been enabled", Toast.LENGTH_SHORT).show()
+//                }else{
+//                    Toast.makeText(this, "Bluetooth has been disabled", Toast.LENGTH_SHORT).show()
+//                }
+//            } else if(resultCode == Activity.RESULT_CANCELED){
+//                Toast.makeText(this, "Bluetooth has been cancelled", Toast.LENGTH_SHORT).show()
+//            }
+//        }
+//    }
+
     private fun setTextSize(textSize: Float) {
         //改变当前页面的字体大小
         currentIndex =
@@ -131,12 +341,12 @@ class MainActivity : BaseActivity() , View.OnClickListener{
         binding.text4.setTextSize(DisplayUtils.px2sp(this, textsize4 * textSize).toFloat())
         binding.text5.setTextSize(DisplayUtils.px2sp(this, textsize5 * textSize).toFloat())
         binding.text6.setTextSize(DisplayUtils.px2sp(this, textsize6 * textSize).toFloat())
-        binding.text7.setTextSize(DisplayUtils.px2sp(this, textsize7 * textSize).toFloat())
-        binding.text8.setTextSize(DisplayUtils.px2sp(this, textsize8 * textSize).toFloat())
-        binding.text9.setTextSize(DisplayUtils.px2sp(this, textsize9 * textSize).toFloat())
-        binding.text10.setTextSize(DisplayUtils.px2sp(this, textsize10 * textSize).toFloat())
-        binding.text11.setTextSize(DisplayUtils.px2sp(this, textsize11 * textSize).toFloat())
-        binding.text12.setTextSize(DisplayUtils.px2sp(this, textsize12 * textSize).toFloat())
+//        binding.text7.setTextSize(DisplayUtils.px2sp(this, textsize7 * textSize).toFloat())
+//        binding.text8.setTextSize(DisplayUtils.px2sp(this, textsize8 * textSize).toFloat())
+//        binding.text9.setTextSize(DisplayUtils.px2sp(this, textsize9 * textSize).toFloat())
+//        binding.text10.setTextSize(DisplayUtils.px2sp(this, textsize10 * textSize).toFloat())
+//        binding.text11.setTextSize(DisplayUtils.px2sp(this, textsize11 * textSize).toFloat())
+//        binding.text12.setTextSize(DisplayUtils.px2sp(this, textsize12 * textSize).toFloat())
         if (currentIndex != fontSliderBar.getCurrentIndex()) {
             if (isClickable) {
                 isClickable = false
@@ -191,16 +401,16 @@ class MainActivity : BaseActivity() , View.OnClickListener{
                 }
                 startActivity(intent)
             }
-            R.id.card3 -> {
-                val intent = Intent(this, DeviceActivity::class.java)
-                if (currentIndex != fontSliderBar.getCurrentIndex()) {
-                    if (isClickable) {
-                        isClickable = false
-                        refresh()
-                    }
-                }
-                startActivity(intent)
-            }
+//            R.id.card3 -> {
+//                val intent = Intent(this, DeviceActivity::class.java)
+//                if (currentIndex != fontSliderBar.getCurrentIndex()) {
+//                    if (isClickable) {
+//                        isClickable = false
+//                        refresh()
+//                    }
+//                }
+//                startActivity(intent)
+//            }
         }
     }
 
