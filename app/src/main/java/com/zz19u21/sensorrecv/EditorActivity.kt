@@ -11,7 +11,6 @@ import android.text.TextWatcher
 import android.text.style.CharacterStyle
 import android.text.style.ForegroundColorSpan
 import android.util.Log
-import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.zz19u21.sensorrecv.databinding.ActivityEditorBinding
@@ -32,6 +31,16 @@ class EditorActivity : AppCompatActivity() {
         binding = ActivityEditorBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+
+        val theFileDir:File = createAppDir()
+        val newFile = File(theFileDir, FILE_NAME)
+
+        try {
+            val inputAsString = FileInputStream(newFile).bufferedReader().use { it.readText() }
+            binding.editTextTextMultiLine.setText(inputAsString)
+        } catch (e: Exception){
+            Log.d(TAG, "file didn't read")
+        }
 
         binding.editTextTextMultiLine.addTextChangedListener(object : TextWatcher {
             var keywords = ColorScheme(
@@ -109,7 +118,7 @@ class EditorActivity : AppCompatActivity() {
             val theFileDir:File = createAppDir()
             
             //write file into app dir
-            var newFile: File = File(theFileDir, FILE_NAME)
+            var newFile = File(theFileDir, FILE_NAME)
 
             try {
                 FileOutputStream(newFile).use {
@@ -157,6 +166,8 @@ class EditorActivity : AppCompatActivity() {
 
         val path = this.getExternalFilesDir(null)
         val theFileDir = File(path, getString(R.string.app_name))
+        val bundle = intent.extras
+        val deviceName = bundle!!.getString("DeviceName")
 
         if(!theFileDir.exists()){
             if (theFileDir.mkdirs()){
@@ -167,7 +178,20 @@ class EditorActivity : AppCompatActivity() {
                 Toast.makeText(this,"Dir not Created", Toast.LENGTH_SHORT).show()
             }
         }
-        return theFileDir
+
+        val theDeviceDir = File(theFileDir, deviceName)
+
+        if(!theDeviceDir.exists()){
+            if (theDeviceDir.mkdirs()){
+                Log.d(TAG, "createAppDir: dir created")
+                Toast.makeText(this,"Dir Created", Toast.LENGTH_SHORT).show()
+            }else{
+                Log.d(TAG, "createAppDir: dir not created")
+                Toast.makeText(this,"Dir not Created", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        return theDeviceDir
     }
 
     private fun checkRuntimePermission() {

@@ -1,8 +1,9 @@
 package com.zz19u21.sensorrecv
 
 import android.Manifest
+import android.app.Activity
+import android.app.AlertDialog
 import android.bluetooth.BluetoothAdapter
-import android.bluetooth.BluetoothAdapter.ACTION_DISCOVERY_STARTED
 import android.bluetooth.BluetoothDevice
 import android.bluetooth.BluetoothManager
 import android.content.BroadcastReceiver
@@ -22,6 +23,7 @@ import android.view.View
 import android.widget.*
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.zz19u21.sensorrecv.databinding.ActivityMainBinding
 import fontsliderbar.FontSliderBar
@@ -33,10 +35,13 @@ class MainActivity : BaseActivity() , View.OnClickListener{
 
     private var m_bluetoothAdapter: BluetoothAdapter? = null
     private lateinit var m_pairedDevices: Set<BluetoothDevice>
-//    val REQUEST_ENABLE_BLUETOOTH = 1
+    private val REQUEST_ENABLE_LOCATION = 101
+
+    private val TAG = "debug"
 
     companion object{
         val EXTRA_ADDRESS: String = "Device_address"
+        val EXTRA_DEVICENAME: String = "Device_name"
     }
 
     private var textSizef by Delegates.notNull<Float>()
@@ -86,6 +91,7 @@ class MainActivity : BaseActivity() , View.OnClickListener{
         binding.topAppBar.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId){
                 R.id.add_bluetooth -> {
+                    checkForPermissions(android.Manifest.permission.ACCESS_FINE_LOCATION, "location", REQUEST_ENABLE_LOCATION)
                     Toast.makeText(this, "Scan bluetooth", Toast.LENGTH_SHORT).show()
                     pairedDeviceList()
                     true
@@ -123,11 +129,11 @@ class MainActivity : BaseActivity() , View.OnClickListener{
         Log.d("TAG", "initData lala: $currentIndex")
         textSizef = 1 + currentIndex * 0.1f
         textsize1 = binding.text1.getTextSize() / textSizef
-        textsize2 = binding.text2.getTextSize() / textSizef
-        textsize3 = binding.text3.getTextSize() / textSizef
+//        textsize2 = binding.text2.getTextSize() / textSizef
+//        textsize3 = binding.text3.getTextSize() / textSizef
         textsize4 = binding.text4.getTextSize() / textSizef
-        textsize5 = binding.text5.getTextSize() / textSizef
-        textsize6 = binding.text6.getTextSize() / textSizef
+//        textsize5 = binding.text5.getTextSize() / textSizef
+//        textsize6 = binding.text6.getTextSize() / textSizef
 //        textsize7 = binding.text7.getTextSize() / textSizef
 //        textsize8 = binding.text8.getTextSize() / textSizef
 //        textsize9 = binding.text9.getTextSize() / textSizef
@@ -174,6 +180,52 @@ class MainActivity : BaseActivity() , View.OnClickListener{
                 .show()
         }
 
+    }
+
+
+    private fun checkForPermissions(permission:String, name:String, requestCode: Int){
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+            when{
+                ContextCompat.checkSelfPermission(applicationContext, permission) == PackageManager.PERMISSION_GRANTED ->{
+                    Toast.makeText(applicationContext, "$name permission granted", Toast.LENGTH_SHORT).show()
+                }
+                shouldShowRequestPermissionRationale(permission) -> showDialog(permission, name, requestCode)
+
+                else -> ActivityCompat.requestPermissions(this, arrayOf(permission), requestCode)
+            }
+        }
+    }
+
+    private fun showDialog(permission: String, name: String, requestCode: Int){
+        val builder = AlertDialog.Builder(this)
+
+        builder.apply {
+            setMessage("Permission to access your $name is required to use this app")
+            setTitle("Permission required")
+            setPositiveButton("OK"){dialog, which ->
+                ActivityCompat.requestPermissions(this@MainActivity, arrayOf(permission), requestCode)
+            }
+            val dialog = builder.create()
+            dialog.show()
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        fun innerCheck(name: String){
+            if (grantResults.isNotEmpty() || grantResults[0] != PackageManager.PERMISSION_GRANTED){
+                Toast.makeText(applicationContext, "$name permission refused", Toast.LENGTH_SHORT).show()
+            } else{
+                Toast.makeText(applicationContext, "$name permission granted", Toast.LENGTH_SHORT).show()
+            }
+        }
+        when(requestCode){
+            REQUEST_ENABLE_LOCATION -> innerCheck("location")
+        }
     }
 
 
@@ -226,7 +278,6 @@ class MainActivity : BaseActivity() , View.OnClickListener{
         Log.d("debug", "pairedDeviceList: adapter is" + m_bluetoothAdapter)
         Log.d("debug", "pairedDeviceList: startdiscover")
         val list: ArrayList<BluetoothDevice> = ArrayList()
-        val listName: ArrayList<String> = ArrayList()
         val receiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context, intent: Intent) {
                 val action: String? = intent.action
@@ -246,28 +297,36 @@ class MainActivity : BaseActivity() , View.OnClickListener{
 
                             Log.d("debughere", "pairedDeviceList: 123 haha")
                         }
-                        val deviceName = device?.name
-                        val deviceHardwareAddress = device?.address // MAC address
+//                        val deviceName = device?.name
+//                        val deviceHardwareAddress = device?.address // MAC address
 
                         Log.d("debughere", "pairedDeviceList: 123" + list)
 
                         if(!list.contains(device)){
                             if (device != null) {
-                                list.add(device)
-                            }
-                            if (deviceName != null) {
-                                listName.add(deviceName)
+                                if(device.name != null)
+                                {
+                                    if(device.name.contains("Wave"))
+                                        list.add(device)
+                                }
                             }
                         }
-                        val adapter = ArrayAdapter(context, android.R.layout.simple_list_item_1, listName)
-                        Log.d("debug", "pairedDeviceList: listnames" + listName)
-                        binding.selectDeviceList.adapter = adapter
-                        binding.selectDeviceList.onItemClickListener = AdapterView.OnItemClickListener{_, _, position, _ ->
+//                        val adapter = ArrayAdapter(context, android.R.layout.simple_list_item_1, list)
+//                        Log.d("debug", "pairedDeviceList: listnames" + listName)
+                        Log.d(TAG, "onReceive: list is" + list)
+                        binding.selectDeviceList.isClickable = true
+                        binding.selectDeviceList.adapter = MyAdapter(context, list)
+                        Log.d(TAG, "onReceive: list adapter is" + binding.selectDeviceList.adapter)
+
+                        binding.selectDeviceList.setOnItemClickListener {parent, view, position, id ->
+                            Log.d(TAG, "onReceive: clicked device")
                             val bdevice: BluetoothDevice = list[position]
                             val address: String = bdevice.address
+                            val deviceName: String = bdevice.name
 
                             val tintent = Intent(context, DeviceActivity::class.java)
                             tintent.putExtra(EXTRA_ADDRESS, address)
+                            tintent.putExtra(EXTRA_DEVICENAME, deviceName)
                             startActivity(tintent)
                         }
                     }
@@ -336,11 +395,11 @@ class MainActivity : BaseActivity() , View.OnClickListener{
         currentIndex =
             MyApplication.myInstance!!.preferencesHelper!!.getValueInt("currentIndex", 1)
         binding.text1.setTextSize(DisplayUtils.px2sp(this, textsize1 * textSize).toFloat())
-        binding.text2.setTextSize(DisplayUtils.px2sp(this, textsize2 * textSize).toFloat())
-        binding.text3.setTextSize(DisplayUtils.px2sp(this, textsize3 * textSize).toFloat())
+//        binding.text2.setTextSize(DisplayUtils.px2sp(this, textsize2 * textSize).toFloat())
+//        binding.text3.setTextSize(DisplayUtils.px2sp(this, textsize3 * textSize).toFloat())
         binding.text4.setTextSize(DisplayUtils.px2sp(this, textsize4 * textSize).toFloat())
-        binding.text5.setTextSize(DisplayUtils.px2sp(this, textsize5 * textSize).toFloat())
-        binding.text6.setTextSize(DisplayUtils.px2sp(this, textsize6 * textSize).toFloat())
+//        binding.text5.setTextSize(DisplayUtils.px2sp(this, textsize5 * textSize).toFloat())
+//        binding.text6.setTextSize(DisplayUtils.px2sp(this, textsize6 * textSize).toFloat())
 //        binding.text7.setTextSize(DisplayUtils.px2sp(this, textsize7 * textSize).toFloat())
 //        binding.text8.setTextSize(DisplayUtils.px2sp(this, textsize8 * textSize).toFloat())
 //        binding.text9.setTextSize(DisplayUtils.px2sp(this, textsize9 * textSize).toFloat())

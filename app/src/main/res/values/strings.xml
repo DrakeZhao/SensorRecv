@@ -25,4 +25,6 @@
     <string name="share_value">Share Value</string>
     <string name="audio_amplitude">Audio Amplitude</string>
     <string name="sound_eg">Sound Pressure Level: -16 dB</string>
+    <string name="bluetooth_address">Bluetooth Address:</string>
+    <string name="please_input_comment">Please input your comment here.</string>
 </resources>

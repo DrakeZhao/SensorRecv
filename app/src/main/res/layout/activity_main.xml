@@ -26,6 +26,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true"
+        android:scrollbars="none"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
 
@@ -50,6 +51,7 @@
                 android:layout_height="wrap_content"
                 app:cardCornerRadius="5dp"
                 android:clickable="true"
+                android:nestedScrollingEnabled="true"
                 style="?attr/materialCardViewElevatedStyle"
                 android:layout_marginHorizontal="10dp"
                 android:layout_marginVertical="5dp"
@@ -69,24 +71,6 @@
                         android:layout_height="wrap_content"
                         android:text="@string/device_1"
                         android:textAppearance="?attr/textAppearanceTitleLarge"
-                        />
-                    <TextView
-                        android:id="@+id/text2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="@string/location"
-                        android:textAppearance="?attr/textAppearanceBodyMedium"
-                        android:textColor="?android:attr/textColorSecondary"
-                        />
-                    <TextView
-                        android:id="@+id/text3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="@string/comments"
-                        android:textAppearance="?attr/textAppearanceBodyMedium"
-                        android:textColor="?android:attr/textColorSecondary"
                         />
 
                 </LinearLayout>
@@ -117,24 +101,6 @@
                         android:layout_height="wrap_content"
                         android:text="@string/device_1"
                         android:textAppearance="?attr/textAppearanceTitleLarge"
-                        />
-                    <TextView
-                        android:id="@+id/text5"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="@string/location"
-                        android:textAppearance="?attr/textAppearanceBodyMedium"
-                        android:textColor="?android:attr/textColorSecondary"
-                        />
-                    <TextView
-                        android:id="@+id/text6"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="@string/comments"
-                        android:textAppearance="?attr/textAppearanceBodyMedium"
-                        android:textColor="?android:attr/textColorSecondary"
                         />
 
                 </LinearLayout>
@@ -242,7 +208,8 @@
                     android:id="@+id/select_device_list"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:scrollbars="vertical"/>
+                    android:nestedScrollingEnabled="true"
+                    tools:listitem="@layout/card_cell"/>
             </LinearLayout>
 
 
