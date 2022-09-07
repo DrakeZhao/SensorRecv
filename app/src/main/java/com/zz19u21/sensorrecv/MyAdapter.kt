@@ -40,4 +40,5 @@ class MyAdapter (context: Context, private val arrayList: ArrayList<BluetoothDev
     }
 
 
+
 }

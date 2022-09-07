@@ -69,7 +69,6 @@ class MainActivity : BaseActivity() , View.OnClickListener{
         setContentView(view)
         binding.card1.setOnClickListener(this)
         binding.card2.setOnClickListener(this)
-//        binding.card3.setOnClickListener(this)
         val bluetoothManager = this.getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
         m_bluetoothAdapter = bluetoothManager.getAdapter()
         if (m_bluetoothAdapter == null){
@@ -122,31 +121,18 @@ class MainActivity : BaseActivity() , View.OnClickListener{
             }
         }
     private fun initData() {
+        //get the current font index
         currentIndex =
             MyApplication.myInstance!!.preferencesHelper!!.getValueInt("currentIndex", 1)
-
-        //        currentIndex = 5;
         Log.d("TAG", "initData lala: $currentIndex")
         textSizef = 1 + currentIndex * 0.1f
         textsize1 = binding.text1.getTextSize() / textSizef
-//        textsize2 = binding.text2.getTextSize() / textSizef
-//        textsize3 = binding.text3.getTextSize() / textSizef
         textsize4 = binding.text4.getTextSize() / textSizef
-//        textsize5 = binding.text5.getTextSize() / textSizef
-//        textsize6 = binding.text6.getTextSize() / textSizef
-//        textsize7 = binding.text7.getTextSize() / textSizef
-//        textsize8 = binding.text8.getTextSize() / textSizef
-//        textsize9 = binding.text9.getTextSize() / textSizef
-//        textsize10 = binding.text10.getTextSize() / textSizef
-//        textsize11 = binding.text11.getTextSize() / textSizef
-//        textsize12 = binding.text12.getTextSize() / textSizef
         val dialogView = LayoutInflater.from(this).inflate(R.layout.text_size_dialog, null)
         fontSliderBar = dialogView.findViewById<FontSliderBar>(R.id.fontSliderBar)
-
-
+        //add operation when clicking on the font icon
         binding.topAppBar.setNavigationOnClickListener{
-
-            Log.d("taggg", "current index: " + currentIndex)
+            //set dialog
             val materialAlertDialogBuilder = MaterialAlertDialogBuilder(this)
             val dialogView = LayoutInflater.from(this).inflate(R.layout.text_size_dialog, null)
             materialAlertDialogBuilder.setView(dialogView)
@@ -173,7 +159,6 @@ class MainActivity : BaseActivity() , View.OnClickListener{
             materialAlertDialogBuilder.setPositiveButton("Finish"){dialog, _ ->
                 dialog.dismiss()
             }
-
             materialAlertDialogBuilder
                 .setTitle("Change Font Size")
                 .setIcon(R.drawable.format_size)
