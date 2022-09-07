@@ -376,21 +376,11 @@ class MainActivity : BaseActivity() , View.OnClickListener{
 //    }
 
     private fun setTextSize(textSize: Float) {
-        //改变当前页面的字体大小
+        //Change text size of current page
         currentIndex =
             MyApplication.myInstance!!.preferencesHelper!!.getValueInt("currentIndex", 1)
         binding.text1.setTextSize(DisplayUtils.px2sp(this, textsize1 * textSize).toFloat())
-//        binding.text2.setTextSize(DisplayUtils.px2sp(this, textsize2 * textSize).toFloat())
-//        binding.text3.setTextSize(DisplayUtils.px2sp(this, textsize3 * textSize).toFloat())
         binding.text4.setTextSize(DisplayUtils.px2sp(this, textsize4 * textSize).toFloat())
-//        binding.text5.setTextSize(DisplayUtils.px2sp(this, textsize5 * textSize).toFloat())
-//        binding.text6.setTextSize(DisplayUtils.px2sp(this, textsize6 * textSize).toFloat())
-//        binding.text7.setTextSize(DisplayUtils.px2sp(this, textsize7 * textSize).toFloat())
-//        binding.text8.setTextSize(DisplayUtils.px2sp(this, textsize8 * textSize).toFloat())
-//        binding.text9.setTextSize(DisplayUtils.px2sp(this, textsize9 * textSize).toFloat())
-//        binding.text10.setTextSize(DisplayUtils.px2sp(this, textsize10 * textSize).toFloat())
-//        binding.text11.setTextSize(DisplayUtils.px2sp(this, textsize11 * textSize).toFloat())
-//        binding.text12.setTextSize(DisplayUtils.px2sp(this, textsize12 * textSize).toFloat())
         if (currentIndex != fontSliderBar.getCurrentIndex()) {
             if (isClickable) {
                 isClickable = false
@@ -400,27 +390,17 @@ class MainActivity : BaseActivity() , View.OnClickListener{
     }
 
     private fun refresh() {
-        //存储标尺的下标
-        Log.d("tagg", "refresh: " + fontSliderBar.getCurrentIndex())
+        //index of the slider
         MyApplication.myInstance!!.preferencesHelper!!.setValue(
             "currentIndex",
             fontSliderBar.getCurrentIndex()
         )
-        //通知主页面重启
+        //Call the homepage to reload
         RxBus.getInstance()
             .post(DataActivity::class.java.simpleName, MessageSocket(98, null, null, null))
         RxBus.getInstance()
             .post(DataActivity::class.java.simpleName, MessageSocket(98, null, null, null))
-//        RxBus.getInstance()
-//            .post(DeviceActivity::class.java.simpleName, MessageSocket(98, null, null, null))
-//        RxBus.getInstance()
-//            .post(DeviceActivity::class.java.simpleName, MessageSocket(98, null, null, null))
         isClickable = true
-        //        showMyDialog();
-        //2s后关闭  延迟执行任务 重启完主页
-//        Handler(Looper.getMainLooper()).postDelayed({ //                hideMyDialog();
-//            finish()
-//        }, 2000)
     }
 
 
@@ -445,16 +425,6 @@ class MainActivity : BaseActivity() , View.OnClickListener{
                 }
                 startActivity(intent)
             }
-//            R.id.card3 -> {
-//                val intent = Intent(this, DeviceActivity::class.java)
-//                if (currentIndex != fontSliderBar.getCurrentIndex()) {
-//                    if (isClickable) {
-//                        isClickable = false
-//                        refresh()
-//                    }
-//                }
-//                startActivity(intent)
-//            }
         }
     }
 
