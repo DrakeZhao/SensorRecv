@@ -11,7 +11,7 @@ import android.view.MotionEvent;
 import android.view.View;
 
 /**
- * Created by Administrator on 2017/9/6 0006.
+ * Referenced by Administrator on 2017/9/6 0006.
  */
 
 public class FontSliderBar extends View {

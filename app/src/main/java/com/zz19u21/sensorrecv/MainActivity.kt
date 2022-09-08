@@ -33,6 +33,7 @@ import kotlin.properties.Delegates
 
 class MainActivity : BaseActivity() , View.OnClickListener{
 
+    //add adapter to bluetooth
     private var m_bluetoothAdapter: BluetoothAdapter? = null
     private lateinit var m_pairedDevices: Set<BluetoothDevice>
     private val REQUEST_ENABLE_LOCATION = 101
@@ -40,6 +41,7 @@ class MainActivity : BaseActivity() , View.OnClickListener{
     private val TAG = "debug"
 
     companion object{
+        //bluetooth address and device name
         val EXTRA_ADDRESS: String = "Device_address"
         val EXTRA_DEVICENAME: String = "Device_name"
     }
@@ -48,17 +50,7 @@ class MainActivity : BaseActivity() , View.OnClickListener{
     private var currentIndex by Delegates.notNull<Int>()
     private var isClickable = true
     private var textsize1 = 0f
-    private var textsize2 = 0f
-    private var textsize3 = 0f
     private var textsize4 = 0f
-    private var textsize5 = 0f
-    private var textsize6 = 0f
-    private var textsize7 = 0f
-    private var textsize8 = 0f
-    private var textsize9 = 0f
-    private var textsize10 = 0f
-    private var textsize11 = 0f
-    private var textsize12 = 0f
     lateinit var fontSliderBar: FontSliderBar
 
     private lateinit var binding: ActivityMainBinding
@@ -69,7 +61,9 @@ class MainActivity : BaseActivity() , View.OnClickListener{
         setContentView(view)
         binding.card1.setOnClickListener(this)
         binding.card2.setOnClickListener(this)
+        //create a bluetooth manager for bluetooth connection
         val bluetoothManager = this.getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
+        //get a bluetooth adapter
         m_bluetoothAdapter = bluetoothManager.getAdapter()
         if (m_bluetoothAdapter == null){
             Toast.makeText(this, "no bluetooth supported", Toast.LENGTH_SHORT).show()
@@ -101,6 +95,7 @@ class MainActivity : BaseActivity() , View.OnClickListener{
         initData()
 
     }
+    //ask for authorisation
     private var requestBluetooth = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == RESULT_OK) {
             //granted
@@ -139,6 +134,7 @@ class MainActivity : BaseActivity() , View.OnClickListener{
             fontSliderBar = dialogView.findViewById<FontSliderBar>(R.id.fontSliderBar)
             currentIndex =
                 MyApplication.myInstance!!.preferencesHelper!!.getValueInt("currentIndex", 1)
+            //set the font slider
             fontSliderBar.setTickCount(6)
                 .setTickHeight(DisplayUtils.convertDip2Px(this, 15).toFloat()).setBarColor(Color.GRAY)
                 .setTextColor(Color.BLACK)
@@ -184,6 +180,7 @@ class MainActivity : BaseActivity() , View.OnClickListener{
     private fun showDialog(permission: String, name: String, requestCode: Int){
         val builder = AlertDialog.Builder(this)
 
+        //ask for permission
         builder.apply {
             setMessage("Permission to access your $name is required to use this app")
             setTitle("Permission required")
@@ -214,6 +211,7 @@ class MainActivity : BaseActivity() , View.OnClickListener{
     }
 
 
+    //get the paired list
     private fun pairedDeviceList(){
         if (ActivityCompat.checkSelfPermission(
                 this,
@@ -259,6 +257,7 @@ class MainActivity : BaseActivity() , View.OnClickListener{
         if (!isGpsEnabled) {
             Log.d("debug", "pairedDeviceList: gps not enabled")
         }
+        //scan for other devices
         m_bluetoothAdapter!!.startDiscovery()
         Log.d("debug", "pairedDeviceList: adapter is" + m_bluetoothAdapter)
         Log.d("debug", "pairedDeviceList: startdiscover")

@@ -16,6 +16,7 @@ class DataActivity : AppCompatActivity(){
         binding.topAppBar.setNavigationOnClickListener{
             finish()
         }
+        //actions on menu items
         binding.topAppBar.setOnMenuItemClickListener{ menuItem ->
             when (menuItem.itemId){
                 R.id.shareValue ->{
@@ -35,7 +36,7 @@ class DataActivity : AppCompatActivity(){
 
         }
     }
-
+//notify the change of font size
 //    override fun rxBusCall(message: MessageSocket?) {
 //        super.rxBusCall(message)
 //        when (message!!.id) {

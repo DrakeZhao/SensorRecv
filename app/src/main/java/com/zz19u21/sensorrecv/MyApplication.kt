@@ -13,13 +13,13 @@ class MyApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        myInstance = this //初始化
+        myInstance = this //Initiating
         preferencesHelper = PreferencesHelper(application, "test")
     }
 
     /**
      *
-     * @return 获取字体缩放比例
+     * @return Get font scaling
      */
     val fontScale: Float
         get() {
@@ -33,7 +33,7 @@ class MyApplication : Application() {
         var myInstance: MyApplication? = null
             private set
 
-        // 单例模式获取唯一的Application实例
+        // Singleton pattern to get a unique instance of Application
         fun getInstance(): Application {
             return myInstance!!.application
         }

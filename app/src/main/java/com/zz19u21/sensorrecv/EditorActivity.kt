@@ -32,16 +32,20 @@ class EditorActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
+        //create directory for the device with the device name
         val theFileDir:File = createAppDir()
+        //create new YAML file
         val newFile = File(theFileDir, FILE_NAME)
 
         try {
+            //read if there is text in the Device.yaml, if there is, write it on the screen
             val inputAsString = FileInputStream(newFile).bufferedReader().use { it.readText() }
             binding.editTextTextMultiLine.setText(inputAsString)
         } catch (e: Exception){
             Log.d(TAG, "file didn't read")
         }
 
+        //syntax highlighting
         binding.editTextTextMultiLine.addTextChangedListener(object : TextWatcher {
             var keywords = ColorScheme(
                 Pattern.compile(
@@ -61,13 +65,14 @@ class EditorActivity : AppCompatActivity() {
                 Color.GRAY
             )
 
+            //regex for double quote
             var dquotes = ColorScheme(
                 Pattern.compile(
                     "(\")((?:[^\"]|\"\")*)\""
                 ),
                 Color.GREEN
             )
-
+            //regex for single quote
             var squotes = ColorScheme(
                 Pattern.compile(
                     "(')((?:[^']|'')*)'"
@@ -116,7 +121,6 @@ class EditorActivity : AppCompatActivity() {
 
 
             val theFileDir:File = createAppDir()
-            
             //write file into app dir
             var newFile = File(theFileDir, FILE_NAME)
 
@@ -132,6 +136,7 @@ class EditorActivity : AppCompatActivity() {
             Toast.makeText(this, "File Written", Toast.LENGTH_SHORT).show()
         }
 
+        //read file when clicking
         binding.btnRead.setOnClickListener {
             val theFileDir:File = createAppDir()
             val newFile = File(theFileDir, FILE_NAME)
@@ -144,7 +149,7 @@ class EditorActivity : AppCompatActivity() {
             }
         }
 
-
+        //check the permission
         checkRuntimePermission()
     }
 
@@ -181,6 +186,7 @@ class EditorActivity : AppCompatActivity() {
 
         val theDeviceDir = File(theFileDir, deviceName)
 
+        //check if the folder exists already
         if(!theDeviceDir.exists()){
             if (theDeviceDir.mkdirs()){
                 Log.d(TAG, "createAppDir: dir created")

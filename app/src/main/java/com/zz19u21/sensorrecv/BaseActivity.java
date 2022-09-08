@@ -69,19 +69,19 @@ public abstract class BaseActivity extends AppCompatActivity {
         Resources res =super.getResources();
         if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.N) {
             Configuration config = res.getConfiguration();
-            config.fontScale= Objects.requireNonNull(MyApplication.Companion.getMyInstance()).getFontScale();//1 设置正常字体大小的倍数
+            config.fontScale= Objects.requireNonNull(MyApplication.Companion.getMyInstance()).getFontScale();//1 Set the multiplier of normal font size
             res.updateConfiguration(config,res.getDisplayMetrics());
         }
         return res;
     }
-    //重写字体缩放比例  api>25
+    //ewrite font scaling  api>25
     @Override
     protected void attachBaseContext(Context newBase) {
         if(Build.VERSION.SDK_INT>Build.VERSION_CODES.N){
             final Resources res = newBase.getResources();
             final Configuration config = res.getConfiguration();
-//            config.fontScale= MyApplication.getMyInstance().getFontScale();//1 设置正常字体大小的倍数
-            config.fontScale= MyApplication.Companion.getMyInstance().getFontScale();//1 设置正常字体大小的倍数
+//            config.fontScale= MyApplication.getMyInstance().getFontScale();//1 Set the multiplier of normal font size
+            config.fontScale= MyApplication.Companion.getMyInstance().getFontScale();//1 Set the multiplier of normal font size
             final Context newContext = newBase.createConfigurationContext(config);
             super.attachBaseContext(newContext);
         }else{

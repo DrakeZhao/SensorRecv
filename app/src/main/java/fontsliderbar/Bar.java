@@ -5,7 +5,7 @@ import android.graphics.Paint;
 import android.text.TextUtils;
 
 /**
- * Created by Administrator on 2017/9/6 0006.
+ * referenced by Administrator on 2017/9/6 0006.
  */
 public class Bar {
 
@@ -62,14 +62,14 @@ public class Bar {
     public float getRightX() {
         return mRightX;
     }
-    //获取标尺最近的刻度 通过圆所在的位置
+    //Get the nearest scale by the position of the circle
     public float getNearestTickCoordinate(Thumb thumb) {
         final int nearestTickIndex = getNearestTickIndex(thumb);
         final float nearestTickCoordinate = mLeftX + (nearestTickIndex * mTickDistance);
         return nearestTickCoordinate;
     }
 
-    //获取标尺最近的刻度 通过下标
+    //Get the nearest scale by subscripts
     public float getNearestTickCoordinate(int index) {
         final int nearestTickIndex = index;
         final float nearestTickCoordinate = mLeftX + (nearestTickIndex * mTickDistance);
@@ -93,7 +93,7 @@ public class Bar {
         for (int i = 0; i <= mSegments; i++) {
             final float x = i * mTickDistance + mLeftX;
             canvas.drawLine(x, mTickStartY, x, mTickEndY, mBarPaint);
-            //绘制头尾 A 以及标准
+            //Plotting the head and tail A as well as the standard
             String text="";
            if(i==0){
                text="A";
