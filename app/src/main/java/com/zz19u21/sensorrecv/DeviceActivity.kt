@@ -58,9 +58,7 @@ class DeviceActivity :  AppCompatActivity(), View.OnClickListener {
         }
         loadData()
         binding.dropdownComment.setTitleText("Comment")
-//        binding.dropdownComment.setContentText(" This is test commentThis is test comment \nThis is test commentThis is test commentThis is test commentThis is test commentThis is test commentThis is test comment\nThis is test commentThis is test comment")
         val ed_text = binding.dropdownComment.getContentTextView()
-
         binding.dropdownComment.getContentTextView().post( Runnable {
             kotlin.run {
                 val linecount = binding.dropdownComment.getContentTextView().lineCount

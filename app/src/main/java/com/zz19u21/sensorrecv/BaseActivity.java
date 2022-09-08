@@ -18,7 +18,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 
 /**
- * Created by zsj on 2016/8/4.
+ * Adapted from project developed by zsj on 2016/8/4.
+ * Activity for getting the base values and notify other activities
  */
 public abstract class BaseActivity extends AppCompatActivity {
 
@@ -27,6 +28,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //start an observable, notify other class
         observable = RxBus.getInstance().register(this.getClass().getSimpleName(), MessageSocket.class);
         observable.observeOn(AndroidSchedulers.mainThread()).subscribe(new Consumer<MessageSocket>() {
 
@@ -61,7 +63,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
 
-    //重写字体缩放比例 api<25
+    //Rewrite font scaling api<25
     @Override
     public Resources getResources() {
         Resources res =super.getResources();

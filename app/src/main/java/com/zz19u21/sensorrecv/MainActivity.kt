@@ -296,9 +296,6 @@ class MainActivity : BaseActivity() , View.OnClickListener{
                                 }
                             }
                         }
-//                        val adapter = ArrayAdapter(context, android.R.layout.simple_list_item_1, list)
-//                        Log.d("debug", "pairedDeviceList: listnames" + listName)
-                        Log.d(TAG, "onReceive: list is" + list)
                         binding.selectDeviceList.isClickable = true
                         binding.selectDeviceList.adapter = MyAdapter(context, list)
                         Log.d(TAG, "onReceive: list adapter is" + binding.selectDeviceList.adapter)
